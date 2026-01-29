@@ -1,7 +1,3 @@
-Absolutely — here’s an updated **README.md** that includes a clear section on **How the Services Communicate**, along with everything else you already had. It’s polished, developer‑friendly, and ready to drop into your repo.
-
----
-
 # **Band Length Calculator — Full Stack App**  
 FastAPI Backend + React (Vite) Frontend
 
@@ -204,19 +200,3 @@ curl -X POST http://localhost:8000/calculate \
 - CORS is enabled for the React dev server.
 - The backend is API‑only; all UI is handled by React.
 - Docker Compose handles networking automatically.
-
----
-
-# **🎯 Next Steps (Optional Enhancements)**
-
-If you want to expand the project, here are natural upgrades:
-
-- User accounts + authentication
-- Presets per brand (GZK, Precise, SimpleShot, etc.)
-- Export records to CSV
-- More charts (elongation distribution, thickness vs cut length)
-- Deploy backend to Azure / Render / Railway
-- Deploy frontend to Netlify / Vercel
-- Add a reverse proxy (Traefik or Nginx)
-
----
