@@ -19,8 +19,12 @@ COPY backend ./backend
 RUN mkdir -p backend/static
 COPY --from=frontend /app/frontend/dist ./backend/static
 
-# Expose port
+# Ensure backend is a Python package
+RUN touch backend/__init__.py
+
+# Set working directory to backend
+WORKDIR /app/backend
+
 EXPOSE 8000
 
-# Run FastAPI and serve static files
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
