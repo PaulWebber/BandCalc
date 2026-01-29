@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: band-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./backend/banddata.db:/app/banddata.db
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - bandnet
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: band-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: ["npm", "run", "dev", "--", "--host"]
+    networks:
+      - bandnet
+
+networks:
+  bandnet:
+    driver: bridge
