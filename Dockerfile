@@ -12,18 +12,15 @@ WORKDIR /app
 COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend code
-COPY backend ./backend
+# Copy backend code directly into /app
+COPY backend .
 
 # Copy frontend build into backend static directory
-RUN mkdir -p backend/static
-COPY --from=frontend /app/frontend/dist ./backend/static
+RUN mkdir -p static
+COPY --from=frontend /app/frontend/dist ./static
 
-# Ensure backend is a Python package
-RUN touch backend/__init__.py
-
-# Set working directory to backend
-WORKDIR /app/backend
+# Ensure backend is a Python package (optional)
+RUN touch __init__.py
 
 EXPOSE 8000
 
