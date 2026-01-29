@@ -1,9 +1,27 @@
-# Ensure backend and app are Python packages
+# Build frontend
+FROM node:20 AS frontend
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm install
+COPY frontend ./
+RUN npm run build
+
+# Build backend
+FROM python:3.12-slim AS backend
+WORKDIR /app
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy backend code
+COPY backend ./backend
+
+# ✅ Now that backend is copied, create __init__.py files
 RUN touch backend/__init__.py
 RUN touch backend/app/__init__.py
 
-# Set working directory to /app
-WORKDIR /app
+# Copy frontend build into backend static directory
+RUN mkdir -p backend/app/static
+COPY --from=frontend /app/frontend/dist ./backend/app/static
 
 EXPOSE 8000
 
